@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Road Traffic Analysis System | YOLO-V4 & Deep SORT</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <div class="logo-icon">
+                    <canvas id="logoCanvas" width="40" height="40"></canvas>
+                </div>
+                <span class="logo-text">Roadlytics</span>
+            </div>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item"><a href="#home" class="nav-link active">Home</a></li>
+                <li class="nav-item"><a href="#scope" class="nav-link">Scope</a></li>
+                <li class="nav-item"><a href="#team" class="nav-link">Our Team</a></li>
+                <li class="nav-item"><a href="#about" class="nav-link">About</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <div class="profile-menu">
+                    <button class="profile-btn" id="profileBtn">
+                        <canvas id="profileCanvas" width="35" height="35"></canvas>
+                    </button>
+                    <div class="dropdown-menu" id="dropdownMenu">
+                        <div class="dropdown-item profile-info hidden" id="profileInfo">
+                            <div class="user-avatar"></div>
+                            <span id="userName">Guest User</span>
+                        </div>
+                        <div class="dropdown-divider hidden" id="divider1"></div>
+                        <div class="dropdown-item login-item" id="loginBtn">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+                            </svg>
+                            <span>Login</span>
+                        </div>
+                        <div class="dropdown-item signup-item" id="signupBtn">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                            </svg>
+                            <span>Sign Up</span>
+                        </div>
+                        <div class="dropdown-divider hidden" id="divider2"></div>
+                        <div class="dropdown-item signout-item hidden" id="signoutBtn">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
+                                <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+                            </svg>
+                            <span>Sign Out</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="hero-background">
+            <canvas id="heroCanvas"></canvas>
+        </div>
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">Road Traffic Analysis System</h1>
+                <p class="hero-subtitle">Real-Time Vehicle Detection & Tracking using YOLO-V4 and Deep SORT</p>
+                <p class="hero-description">
+                    Automated AI-powered traffic surveillance for intelligent urban mobility and smart city management
+                </p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" id="getDemoBtn">Get Started</button>
+                    <button class="btn btn-secondary" id="learnMoreBtn">Learn More</button>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">99.2%</span>
+                        <span class="stat-label">Accuracy</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">60+</span>
+                        <span class="stat-label">FPS</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">Real-time</span>
+                        <span class="stat-label">Processing</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Traffic Monitor Section (Dynamic UI) -->
+    <section class="traffic-monitor-section" id="trafficMonitor">
+        <div class="container">
+            <h2 class="section-title">Live Traffic Monitor</h2>
+            <p class="section-subtitle">Real-time traffic analysis with dynamic status indicators</p>
+            
+            <div class="monitor-container" id="monitorContainer">
+                <div class="monitor-display">
+                    <canvas id="trafficCanvas"></canvas>
+                    <div class="monitor-overlay">
+                        <div class="traffic-status" id="trafficStatus">
+                            <div class="status-indicator" id="statusIndicator"></div>
+                            <span class="status-text" id="statusText">LOW TRAFFIC</span>
+                        </div>
+                        <div class="monitor-stats">
+                            <div class="monitor-stat">
+                                <span class="monitor-stat-label">Vehicles Detected</span>
+                                <span class="monitor-stat-value" id="vehicleCount">12</span>
+                            </div>
+                            <div class="monitor-stat">
+                                <span class="monitor-stat-label">FPS</span>
+                                <span class="monitor-stat-value" id="fpsCount">60</span>
+                            </div>
+                            <div class="monitor-stat">
+                                <span class="monitor-stat-label">Precision</span>
+                                <span class="monitor-stat-value" id="precisionValue">98.5%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="control-panel">
+                    <h3>Traffic Level Control</h3>
+                    <p>Simulate different traffic conditions</p>
+                    <div class="traffic-buttons">
+                        <button class="traffic-btn low-btn active" data-level="low">Low Traffic</button>
+                        <button class="traffic-btn medium-btn" data-level="medium">Medium Traffic</button>
+                        <button class="traffic-btn high-btn" data-level="high">High Traffic</button>
+                    </div>
+                    
+                    <div class="traffic-metrics">
+                        <div class="metric-row">
+                            <span class="metric-label">Traffic Density:</span>
+                            <div class="metric-bar">
+                                <div class="metric-fill" id="densityBar" style="width: 25%;"></div>
+                            </div>
+                            <span class="metric-value" id="densityValue">25%</span>
+                        </div>
+                        <div class="metric-row">
+                            <span class="metric-label">Congestion Level:</span>
+                            <div class="metric-bar">
+                                <div class="metric-fill" id="congestionBar" style="width: 25%;"></div>
+                            </div>
+                            <span class="metric-value" id="congestionValue">Low</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="container">
+            <h2 class="section-title">System Features</h2>
+            <p class="section-subtitle">Advanced capabilities for comprehensive traffic analysis</p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <canvas class="feature-canvas" data-type="detection" width="60" height="60"></canvas>
+                    </div>
+                    <h3>Real-Time Detection</h3>
+                    <p>YOLO-V4 powered vehicle detection with high accuracy and speed</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <canvas class="feature-canvas" data-type="tracking" width="60" height="60"></canvas>
+                    </div>
+                    <h3>Multi-Object Tracking</h3>
+                    <p>Deep SORT algorithm for robust vehicle tracking across frames</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <canvas class="feature-canvas" data-type="analytics" width="60" height="60"></canvas>
+                    </div>
+                    <h3>Traffic Analytics</h3>
+                    <p>Comprehensive metrics including FPS, accuracy, and precision</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <canvas class="feature-canvas" data-type="congestion" width="60" height="60"></canvas>
+                    </div>
+                    <h3>Congestion Detection</h3>
+                    <p>Automatic identification of traffic congestion patterns</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scope Section -->
+    <section id="scope" class="scope-section">
+        <div class="container">
+            <h2 class="section-title">Scope & Future Extensions</h2>
+            <p class="section-subtitle">Expanding horizons in intelligent traffic management</p>
+            
+            <div class="scope-content">
+                <div class="scope-current">
+                    <h3>Current Applications</h3>
+                    <div class="application-list">
+                        <div class="application-item">
+                            <div class="app-icon">🚦</div>
+                            <div class="app-content">
+                                <h4>Intelligent Traffic Monitoring</h4>
+                                <p>24/7 automated surveillance systems</p>
+                            </div>
+                        </div>
+                        <div class="application-item">
+                            <div class="app-icon">📊</div>
+                            <div class="app-content">
+                                <h4>Congestion Detection</h4>
+                                <p>Real-time traffic flow analysis</p>
+                            </div>
+                        </div>
+                        <div class="application-item">
+                            <div class="app-icon">🏙️</div>
+                            <div class="app-content">
+                                <h4>Smart City Management</h4>
+                                <p>Integrated urban traffic solutions</p>
+                            </div>
+                        </div>
+                        <div class="application-item">
+                            <div class="app-icon">🛣️</div>
+                            <div class="app-content">
+                                <h4>Highway Surveillance</h4>
+                                <p>Interstate and intersection monitoring</p>
+                            </div>
+                        </div>
+                        <div class="application-item">
+                            <div class="app-icon">⚠️</div>
+                            <div class="app-content">
+                                <h4>Violation Monitoring</h4>
+                                <p>Traffic rule compliance tracking</p>
+                            </div>
+                        </div>
+                        <div class="application-item">
+                            <div class="app-icon">🗺️</div>
+                            <div class="app-content">
+                                <h4>Urban Mobility Planning</h4>
+                                <p>Data-driven infrastructure decisions</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="scope-future">
+                    <h3>Future Extensions</h3>
+                    <div class="future-grid">
+                        <div class="future-card">
+                            <div class="future-icon">🤖</div>
+                            <h4>AI-Powered Predictions</h4>
+                            <p>Machine learning models for traffic forecasting and pattern recognition</p>
+                        </div>
+                        <div class="future-card">
+                            <div class="future-icon">🚨</div>
+                            <h4>Accident Detection</h4>
+                            <p>Automatic incident identification and emergency response triggering</p>
+                        </div>
+                        <div class="future-card">
+                            <div class="future-icon">☁️</div>
+                            <h4>Cloud Integration</h4>
+                            <p>Scalable cloud-based processing for city-wide deployment</p>
+                        </div>
+                        <div class="future-card">
+                            <div class="future-icon">📱</div>
+                            <h4>Mobile Application</h4>
+                            <p>Real-time traffic updates and route optimization for commuters</p>
+                        </div>
+                        <div class="future-card">
+                            <div class="future-icon">🔗</div>
+                            <h4>IoT Integration</h4>
+                            <p>Connected traffic lights and smart signal management systems</p>
+                        </div>
+                        <div class="future-card">
+                            <div class="future-icon">🌍</div>
+                            <h4>Multi-City Network</h4>
+                            <p>Interconnected traffic management across metropolitan areas</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team" class="team-section">
+        <div class="container">
+            <h2 class="section-title">Our Team</h2>
+            <p class="section-subtitle">Meet the innovators behind the system</p>
+            
+            <div class="team-grid">
+                <div class="team-card">
+                    <div class="team-avatar">
+                        <canvas class="avatar-canvas" data-name="S.V. Rajesh" width="120" height="120"></canvas>
+                    </div>
+                    <h3 class="team-name">S.V. Rajesh</h3>
+                    <p class="team-role">Project Lead & AI Specialist</p>
+                    <div class="team-social">
+                        <a href="#" class="social-link">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="team-card">
+                    <div class="team-avatar">
+                        <canvas class="avatar-canvas" data-name="A. DEVI HARSHITHA" width="120" height="120"></canvas>
+                    </div>
+                    <h3 class="team-name">A. Devi Harshitha</h3>
+                    <p class="team-role">Computer Vision Engineer</p>
+                    <div class="team-social">
+                        <a href="#" class="social-link">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="team-card">
+                    <div class="team-avatar">
+                        <canvas class="avatar-canvas" data-name="Y. LEELA PRASANNA" width="120" height="120"></canvas>
+                    </div>
+                    <h3 class="team-name">Y. Leela Prasanna</h3>
+                    <p class="team-role">Deep Learning Researcher</p>
+                    <div class="team-social">
+                        <a href="#" class="social-link">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="team-card">
+                    <div class="team-avatar">
+                        <canvas class="avatar-canvas" data-name="S. MAHARAJU" width="120" height="120"></canvas>
+                    </div>
+                    <h3 class="team-name">S. Maharaju</h3>
+                    <p class="team-role">Software Developer</p>
+                    <div class="team-social">
+                        <a href="#" class="social-link">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <h2 class="section-title">About the Project</h2>
+            <p class="section-subtitle">Revolutionizing urban traffic management with AI</p>
+            
+            <div class="about-content">
+                <div class="about-text">
+                    <div class="about-block">
+                        <h3>Abstract</h3>
+                        <p>Rapid urbanization and increasing vehicle density have made effective traffic monitoring a critical challenge for modern cities. This project presents an AI-based Road Traffic Analysis System that performs real-time vehicle detection, tracking, and traffic flow analysis using YOLO-V4 and Deep SORT algorithms.</p>
+                        <p>The system processes uploaded traffic videos through a Tkinter-based graphical user interface, where YOLO-V4 is employed for high-speed and accurate vehicle detection, and Deep SORT is used to assign unique IDs and track vehicles across consecutive frames.</p>
+                    </div>
+                    
+                    <div class="about-block">
+                        <h3>Existing Problem</h3>
+                        <p>Traditional traffic monitoring systems rely on manual surveillance, static CCTV observation, and sensor-based approaches such as inductive loop detectors. These methods are labor-intensive, error-prone, and lack real-time adaptability.</p>
+                        <p>Manual monitoring cannot efficiently handle high density traffic scenarios, while sensor-based systems are costly to install and maintain. Additionally, conventional rule-based tracking techniques struggle with occlusions, overlapping vehicles, and varying lighting conditions.</p>
+                    </div>
+                    
+                    <div class="about-block">
+                        <h3>Our Proposed Method</h3>
+                        <p>The proposed system integrates YOLO-V4 for real-time vehicle detection and Deep SORT for robust multi-object tracking. Users upload traffic videos through a Tkinter-based desktop interface.</p>
+                        <p>Video frames are extracted and resized before being processed by YOLO-V4 to detect vehicles with bounding boxes. Deep SORT then assigns unique IDs to each detected vehicle and tracks their movement across frames using Kalman filtering and cosine distance metrics.</p>
+                        <p>The system displays real-time results including bounding boxes, tracking IDs, vehicle counts, FPS, accuracy, and precision. This automated pipeline ensures accurate, scalable, and real-time traffic analysis suitable for highways, intersections, and urban roads.</p>
+                    </div>
+                </div>
+                
+                <div class="about-visual">
+                    <div class="tech-stack">
+                        <h3>Technology Stack</h3>
+                        <div class="tech-items">
+                            <div class="tech-item">
+                                <div class="tech-icon">🎯</div>
+                                <span>YOLO-V4</span>
+                            </div>
+                            <div class="tech-item">
+                                <div class="tech-icon">🔍</div>
+                                <span>Deep SORT</span>
+                            </div>
+                            <div class="tech-item">
+                                <div class="tech-icon">🐍</div>
+                                <span>Python</span>
+                            </div>
+                            <div class="tech-item">
+                                <div class="tech-icon">📊</div>
+                                <span>OpenCV</span>
+                            </div>
+                            <div class="tech-item">
+                                <div class="tech-icon">🧠</div>
+                                <span>TensorFlow</span>
+                            </div>
+                            <div class="tech-item">
+                                <div class="tech-icon">🖼️</div>
+                                <span>Tkinter</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="methodology">
+                        <h3>Methodology</h3>
+                        <canvas id="methodologyCanvas" width="400" height="300"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>TrafficAI</h4>
+                    <p>Intelligent traffic monitoring for smarter cities</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#scope">Scope</a></li>
+                        <li><a href="#team">Team</a></li>
+                        <li><a href="#about">About</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>svrajesh21@gmail.com</p>
+                    <p>© 2026 TrafficAI. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <span class="modal-close" id="loginClose">&times;</span>
+            <h2>Login</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div class="modal" id="signupModal">
+        <div class="modal-content">
+            <span class="modal-close" id="signupClose">&times;</span>
+            <h2>Sign Up</h2>
+            <form id="signupForm">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" id="signupName" required>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="signupEmail" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="signupPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Sign Up</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
