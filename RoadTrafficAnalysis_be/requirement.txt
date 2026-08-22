@@ -1,0 +1,12 @@
+opencv-python==4.5.5.64
+lxml==4.9.3
+tqdm==4.49.0
+tensorflow==2.10.0
+keras==2.10.0
+absl-py==0.15.0
+easydict==1.9
+matplotlib==3.5.3
+pillow==9.5.0
+h5py==2.10.0
+protobuf==3.20.3
+flask-cors==4.0.0
